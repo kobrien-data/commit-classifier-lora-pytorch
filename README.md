@@ -111,10 +111,8 @@ commit-classifier-lora/
 │   ├── model_lora.py        # DistilBERT + injected LoRA + classifiction head
 │   ├── train.py             # training loop with validation + early stopping
 │   ├── evaluate.py          # accuracy, macro-F1 on the test set
-├── serve/
-│   ├── app.py               # FastAPI: POST /classify
-│   └── Dockerfile
-└── requirements.txt
+│   ├── diagnose.py          # accuracy, macro-F1 on the test set
+└── requirements.txt.        # confusion matrix and per-class report
 ```
 
 ---
@@ -148,36 +146,6 @@ python src/train.py
 python src/evaluate.py
 ```
 
-**4. Serve the trained model:**
-
-```bash
-uvicorn serve.app:app --reload
-# or
-docker build -t commit-classifier serve/ && docker run -p 8000:8000 commit-classifier
-```
-
----
-
-## API
-
-`POST /classify`
-
-```bash
-curl -X POST http://localhost:8000/classify \
-  -H "Content-Type: application/json" \
-  -d '{"message": "fix race condition in connection pool"}'
-```
-
-```json
-{
-  "type": "fix",
-  "probabilities": {
-    "fix": 0.91, "feat": 0.04, "refactor": 0.03,
-    "chore": 0.01, "test": 0.01, "docs": 0.00
-  }
-}
-```
-
 ---
 
 ## What I implemented by hand
@@ -189,7 +157,7 @@ These are written from scratch rather than delegated to a high-level library, be
 - The from-scratch classifier (`nn.Module`)
 - The training loop (`forward -> loss -> zero_grad -> backward -> optimizer.step`, epoch loop, and a no-grad validation pass with early stopping)
 - The evaluation metrics and confusion-matrix diagnostics
-Pretrained-model loading and the tokenizer come from Hugging Face `transformers` — the standard division of labour.
+Pretrained-model loading and the tokenizer come from Hugging Face `transformers`, the standard division of labour.
 
 ---
 
