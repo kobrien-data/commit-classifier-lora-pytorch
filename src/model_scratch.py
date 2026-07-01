@@ -1,7 +1,7 @@
 import torch.nn as nn
 
 class FromScratchClassifier(nn.Module):
-    def __init__(self, vocab_size, embed_dim=64, hidden=128, num_classes=10):
+    def __init__(self, vocab_size, embed_dim=64, hidden=128, num_classes=6):
         super().__init__()
         self.embedding = nn.Embedding(vocab_size, embed_dim)
         self.fc1 = nn.Linear(embed_dim, hidden)

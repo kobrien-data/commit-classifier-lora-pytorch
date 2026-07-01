@@ -7,7 +7,7 @@ class CommitDataset(Dataset):
     def __init__(self, split):
         super().__init__()
         self.data = split
-        self.category_map = {"feat": 0, "fix": 1, "docs": 2, "refactor": 3, "test": 4, "chore": 5, "ci": 6, "build": 7, "style": 8, "perf": 9}
+        self.category_map = {"feat": 0, "fix": 1, "docs": 2, "refactor": 3, "test": 4, "chore": 5, "ci": 5, "build": 5, "style": 5, "perf": 3}
         self.tokenizer = AutoTokenizer.from_pretrained("distilbert-base-uncased")
 
     def __len__(self):

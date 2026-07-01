@@ -5,6 +5,7 @@ from dataset import CommitDataset
 from datasets import load_dataset
 from model_scratch import FromScratchClassifier
 from sklearn.metrics import f1_score
+from model_lora import ModelLora
 
 commit_ds = load_dataset("0x404/ccs_dataset")
 test_dataset = CommitDataset(commit_ds["test"])
@@ -12,7 +13,9 @@ loader = DataLoader(test_dataset, batch_size=16, shuffle=False)
 
 vocab_size = test_dataset.tokenizer.vocab_size
 model = FromScratchClassifier(vocab_size=vocab_size, num_classes=10)
+#model = ModelLora()
 model.load_state_dict(torch.load("src/scratch_model.pt"))
+#model.load_state_dict(torch.load("src/lora_model.pt"))
 
 
 model.eval()
@@ -21,6 +24,7 @@ all_labels = []
 with torch.no_grad():
     for batch in loader:
         logits = model(batch["input_ids"])
+        #logits = model(batch["input_ids"], batch["attention_mask"])
         pred_batch = logits.argmax(dim=1)
         all_preds.extend(pred_batch.tolist())
         all_labels.extend(batch["label"].tolist()) 
