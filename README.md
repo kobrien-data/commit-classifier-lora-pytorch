@@ -16,7 +16,7 @@ Given a commit message, predict its [Conventional Commit](https://www.convention
 
 Short inputs, six classes, trains fast on a laptop or a cheap GPU — small enough to iterate quickly, real enough to be a meaningful comparison.
 
-Data comes from the [`0x404/ccs_dataset`](https://huggingface.co/datasets/0x404/ccs_dataset) dataset on the Hugging Face Hub (commit messages labelled by Conventional Commit type, with a human-annotated split). It downloads automatically on first run — no scraping or API keys required.
+Data comes from the [`0x404/ccs_dataset`](https://huggingface.co/datasets/0x404/ccs_dataset) dataset on the Hugging Face Hub (commit messages labelled by Conventional Commit type, with a human-annotated split). It downloads automatically on first run.
 
 ---
 
